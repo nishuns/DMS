@@ -1,9 +1,7 @@
 const express=require('express');
-const mongoose=require('mongoose');
 var cors = require('cors')
 const app = express();
 var http = require('http').createServer(app)
-const io = require('socket.io')(http);
 const bodyParser=require('body-parser');
 require('dotenv');
 const port = process.env.PORT || 4000
