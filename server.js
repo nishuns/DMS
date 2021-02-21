@@ -27,12 +27,12 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+app.set("view engine", "ejs");
 app.use(express.static("public"));
 
-// get request for login page
 app.get('/', (req, res) => {
-  res.sendFile(__dirname+'/source/index.html');
-})
+    res.render('./pages/index');
+});
 
 http.listen(port, () => {
   console.log(`listening at http://localhost:${port}`)
