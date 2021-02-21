@@ -5,8 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DMS</title>
+    <!-- Bootstrap CDN -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- stylesheet for Font Awsome(icons) -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./sidenav.css">
 </head>
 <body>
-    <h1>Welcome to DMS</h1>
+    <div id="app">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <!-- Brand/logo -->
+            <a class="navbar-brand text-light Logo"  href="#">DD</a>
+            <form class="form-inline" style="flex-wrap: nowrap;" action="">
+                <input class="form-control" type="text"  placeholder="Search">
+                <button class="btn btn-danger nav-search-button" :disabled="search_button.disabled" type="button" style="margin-left:10px"><i class="fas fa-search"></i> Search</button>
+            </form>
+            <button class="btn btn-warning create-new-database" :disabled="createdbs_button.disabled" style="margin-left: auto"><i class="fas fa-plus"></i>
+                Create New Database</button>
+        </nav>
+        <div class="sidenav">
+            <p class="text-light">Home</p>
+        </div>
+    </div>
+    <script src="https://use.fontawesome.com/6a60c76c47.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="./vue_script.js"></script>
+    <script src="./script.js"></script>
 </body>
 </html>

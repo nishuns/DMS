@@ -1,0 +1,40 @@
+/* Google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
+/* ends */
+
+.sidenav {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    z-index: -1;
+    top: 50px;
+    left: 0;
+    background-color: #ffc107;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+  
+  .sidenav p {
+    /* padding: 6px 8px 6px 16px; */
+    text-align: center;
+    text-decoration: none;
+    font-size: 25px;
+    display: block;
+  }
+
+  .main {
+    margin-left: 160px; /* Same as the width of the sidenav */
+    font-size: 28px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+
+  @media screen and (max-width: 570px){
+      .sidenav{
+          width: 0;
+      }
+  }
