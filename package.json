@@ -4,8 +4,11 @@
   "description": "Database management system",
   "main": "server.js",
   "scripts": {
-    "test": "node server.js",
     "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
   },
   "author": "Nischay Sharma",
   "license": "ISC",
