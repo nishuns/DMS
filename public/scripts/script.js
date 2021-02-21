@@ -17,3 +17,27 @@ document.body.onresize=()=>{
         document.querySelector('.nav-search-button').innerHTML="<i class='fas fa-search'></i> Search";
     }
 }
+
+function openFile(){
+    document.getElementById('getinputfile').click();
+}
+
+var input = document.getElementById('getinputfile');
+var dbs=[];
+input.addEventListener('change', () => {
+    readXlsxFile(input.files[0]).then((rows) => {
+        let keys=[];
+        for(let col of rows[0]) keys.push(col);
+        for(let i=1;i<rows.length;i++){
+            let temp={};
+            for(let each in rows[i]){
+                temp[keys[each]]=rows[i][each];
+            }
+            dbs.push(temp);
+            temp="";
+        }
+        console.log(dbs);
+      // `rows` is an array of rows
+      // each row being an array of cells.
+    });
+  })

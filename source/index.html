@@ -14,6 +14,38 @@
     <link rel="stylesheet" href="/css/sidenav.css">
 </head>
 <body>
+    <div class="popup-background" >
+        <div class="inner-popup-background">
+            <div class="window" id="popup">
+                <h2 style="text-align: center; margin: 16px 0">Create New Database</h2>
+                <div class="d-flex" style="flex-direction: column; padding: 2em">
+                    <div class="form-group">
+                    <label>Database Name</label>
+                    <input type="text" class="form-control" placeholder="Enter the database name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose File Type</label>
+                        <select class="custom-select" name="" id="">
+                            <option value="" class="active">Choose...</option>
+                            <option value="">.xlsx</option>
+                        </select>
+                    </div>
+                    <label>Add File</label>
+                    <div class="form-group">
+                        <input type="file" name="" id="getinputfile" accept=".xlsx,.xls"  hidden>
+                        <button type="button" class="btn btn-danger" onclick="openFile()"><i class="fas fa-plus"></i> Add File</button>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1em">
+                    <button class="btn btn-outline-danger">Cancel</button>
+                    <div class="d-flex">
+                        <div class="spinner-border text-warning" style="margin-right: 10px;display: none;" ></div>
+                        <button class="btn btn-warning"><i class="fas fa-file-excel"></i> Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="app">
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <!-- Brand/logo -->
@@ -28,6 +60,13 @@
         <div class="sidenav">
             <p class="text-light">Home</p>
         </div>
+        <main class="main">
+            <div class="nothingtoshow">
+                <div class="alert alert-info empty-field" role="alert" style="font-size: 16px;">
+                    Nothing to show now...!! please come back later!!
+                </div>
+            </div>
+        </main>
     </div>
     <script src="https://use.fontawesome.com/6a60c76c47.js"></script>
     <!-- jQuery library -->
@@ -37,6 +76,8 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- CDN for rading excel files -->
+    <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
     <script src="/scripts/vue_script.js"></script>
     <script src="/scripts/script.js"></script>
 </body>

@@ -2,8 +2,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
 /* ends */
 
-/* @media screen and (max-width: 570px){
+
+.main{
+    position: relative;
+}
+
+.popup-background{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.inner-popup-background{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.window{
+    min-width: 360px;
+    min-height: 480px;
+    width: 50%;
+    height: 50%;
+    background: #fff;
+    box-shadow: 1px 1px 4px #000;
+}
+
+
+@media screen and (max-width: 570px){
     .Logo{
-        margin: 0 auto;
+        margin: 0;
+        margin-right: 5px;
     }
-} */
+
+    .empty-field{
+        left: -80px;
+    }
+}
