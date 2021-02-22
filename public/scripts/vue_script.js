@@ -50,6 +50,7 @@ const createdbs=new Vue({
                 let output=response.data;
                 if(output.status=='success'){
                     app.spreadsheets=output.spreadsheets;
+                    showit.spreadsheets=output.spreadsheets;
                     self.style.display="none";
                     self.loading.display="block";
                 }

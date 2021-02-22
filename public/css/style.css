@@ -5,6 +5,7 @@
 
 .main{
     position: relative;
+    margin-left: 160px;
 }
 
 .popup-background{
@@ -41,9 +42,13 @@
         margin-right: 5px;
     }
 
-    .empty-field{
-        left: -80px;
+    .main{
+        margin-left: 0;
     }
+
+    /* .empty-field{
+        left: -80px;
+    } */
 
     .nav-search-bar{
         max-width: 160px;
