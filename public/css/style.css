@@ -3,8 +3,8 @@
 /* ends */
 
 
-.main{
-    position: relative;
+.main-area{
+    /* position: relative; */
     margin-left: 160px;
 }
 
@@ -42,7 +42,7 @@
         margin-right: 5px;
     }
 
-    .main{
+    .main-area{
         margin-left: 0;
     }
 
