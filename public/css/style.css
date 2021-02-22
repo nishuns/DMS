@@ -44,4 +44,8 @@
     .empty-field{
         left: -80px;
     }
+
+    .nav-search-bar{
+        max-width: 160px;
+    }
 }

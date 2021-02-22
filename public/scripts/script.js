@@ -4,7 +4,7 @@ if(window.innerWidth<=768){
     document.querySelector('.create-new-database').innerHTML="<i class='fas fa-plus'></i>";
     document.querySelector('.nav-search-button').innerHTML="<i class='fas fa-search'></i>";
 }else{
-    document.querySelector('.create-new-database').innerHTML="<i class='fas fa-plus'></i> Create New Database";
+    document.querySelector('.create-new-database').innerHTML="<i class='fas fa-plus'></i> Create New Entry";
     document.querySelector('.nav-search-button').innerHTML="<i class='fas fa-search'></i> Search";
 }
 
@@ -13,7 +13,7 @@ document.body.onresize=()=>{
         document.querySelector('.create-new-database').innerHTML="<i class='fas fa-plus'></i>";
         document.querySelector('.nav-search-button').innerHTML="<i class='fas fa-search'></i>";
     }else{
-        document.querySelector('.create-new-database').innerHTML="<i class='fas fa-plus'></i> Create New Database";
+        document.querySelector('.create-new-database').innerHTML="<i class='fas fa-plus'></i> Create New Entry";
         document.querySelector('.nav-search-button').innerHTML="<i class='fas fa-search'></i> Search";
     }
 }
@@ -37,6 +37,7 @@ input.addEventListener('change', () => {
             temp="";
         }
         console.log(dbs);
+        createdbs.spreadsheet=dbs;
       // `rows` is an array of rows
       // each row being an array of cells.
     });

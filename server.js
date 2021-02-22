@@ -3,33 +3,88 @@ var cors = require('cors')
 const app = express();
 var http = require('http').createServer(app)
 const bodyParser=require('body-parser');
-require('dotenv');
+const { Client }=require('pg');
+require('dotenv').config();
 const port = process.env.PORT || 4000
 var waiting=null;
 
 
 app.use(cors());
 
-// mongoose.connect("mongodb+srv://UsersDB:mikkuo8279459923@cluster0.qcost.mongodb.net/UsersDB?retryWrites=true&w=majority", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// });
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
-// mongoose.set("useCreateIndex", true);
-
-// const Chat= new mongoose.model('Chat', chatSchema);
-// const Task=new mongoose.model('Task', taskSchema);
-// const Feeds=new mongoose.model('Feeds', feedbackSchema);
-// const Count=new mongoose.model('Count', countSchema);
+client.connect();
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use(express.static("public"));
 
+
+
 // get request for login page
 app.get('/', (req, res) => {
   res.sendFile(__dirname+'/source/index.html');
+})
+
+app.get('/getspreasheets', (req,res)=>{
+  client.query('SELECT * FROM students', (error, results) => {
+    if (error) {
+      throw error
+    }
+    res.status(200).send({
+      status: "success",
+      message: "Successfully added data",
+      spreadsheets: results.rows 
+    })
+  });
+})
+
+app.post('/savespreadsheet', (req,res)=>{
+  let spreadsheet=req.body.spreadsheet;
+  console.log(spreadsheet);
+  for(let sheet of spreadsheet){
+    client.query(`INSERT INTO ${req.body.table}(name, roll_no, class) VALUES($1, $2, $3)`,[sheet.Name, sheet.Roll_no, sheet.Class], (error, results) => {
+      if (error) {
+        throw error
+      }
+      console.log(results);
+    })
+  }
+  client.query('SELECT * FROM students', (error, results) => {
+    if (error) {
+      throw error
+    }
+    res.status(200).send({
+      status: "success",
+      message: "Successfully added data",
+      spreadsheets: results.rows 
+    })
+  });
+});
+
+app.get('/test', (req,res)=>{
+  client.query('INSERT INTO students(name, roll_no, class) VALUES($1, $2, $3)',["Nischay", 17, 7], (error, results) => {
+    if (error) {
+      throw error
+    }
+    console.log(results);
+  })
+})
+
+app.get('/testme', (req,res)=>{
+  client.query('SELECT * FROM students', (error, results) => {
+    if (error) {
+      throw error
+    }
+    console.log((results.rows));
+    res.status(200).json(results.rows)
+  })
 })
 
 http.listen(port, () => {

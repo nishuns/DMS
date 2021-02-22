@@ -14,56 +14,103 @@
     <link rel="stylesheet" href="/css/sidenav.css">
 </head>
 <body>
-    <div class="popup-background" >
+    <!-- popup for adding data -->
+    <div class="popup-background" id="createdbs" style="display: none;" :style="style">
         <div class="inner-popup-background">
             <div class="window" id="popup">
-                <h2 style="text-align: center; margin: 16px 0">Create New Database</h2>
-                <div class="d-flex" style="flex-direction: column; padding: 2em">
+                <h2 style="text-align: center; margin: 16px 0">Create New Entry</h2>
+                <div class="d-flex" style="flex-direction: column; padding: 2em" v-on="createdbsemptycheck">
                     <div class="form-group">
-                    <label>Database Name</label>
-                    <input type="text" class="form-control" placeholder="Enter the database name" required>
+                        <label>Choose Table</label>
+                        <select class="custom-select" name="" id="" v-model="databasename" v-on="addfileemptycheck">
+                            <option :value="'Choose...'">Choose...</option>
+                            <option :value="'students'">students</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Choose File Type</label>
-                        <select class="custom-select" name="" id="">
-                            <option value="" class="active">Choose...</option>
-                            <option value="">.xlsx</option>
+                        <select class="custom-select" name="" id="" v-model="databasefiletype" v-on="addfileemptycheck">
+                            <option :value="'Choose...'">Choose...</option>
+                            <option :value="'.xlsx'">.xlsx</option>
                         </select>
                     </div>
                     <label>Add File</label>
                     <div class="form-group">
                         <input type="file" name="" id="getinputfile" accept=".xlsx,.xls"  hidden>
-                        <button type="button" class="btn btn-danger" onclick="openFile()"><i class="fas fa-plus"></i> Add File</button>
+                        <button type="button" class="btn btn-danger" onclick="openFile()" :disabled="addfile_button.disabled"><i class="fas fa-plus"></i> Add File</button>
                     </div>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1em">
-                    <button class="btn btn-outline-danger">Cancel</button>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 2em">
+                    <button class="btn btn-outline-danger" @click="createdatabsemenuclose">Cancel</button>
                     <div class="d-flex">
-                        <div class="spinner-border text-warning" style="margin-right: 10px;display: none;" ></div>
-                        <button class="btn btn-warning"><i class="fas fa-file-excel"></i> Create</button>
+                        <div class="spinner-border text-warning" style="margin-right: 10px;display: none;" :style="loading" ></div>
+                        <button type="button" class="btn btn-warning" style="padding: 7px 1em" :disabled="create_button.disabled" @click="createspreadsheet"><i class="fas fa-file-excel"></i> Create</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="app">
+    <!-- popup for displaying data -->
+    <div class="popup-background" id="view" style="display: none;" :style="style">
+        <div class="inner-popup-background">
+            <div class="card" id="popup" style="max-width: 60rem; width: 60rem; min-width: 360px;">
+                <div class="card-header">
+                    <div class="d-flex align-items-center" style="margin: 10px 0;">
+                        <button class="btn btn-danger" @click="closeit">Close</button>
+                        <div class="d-flex align-items-center" style="justify-content: space-between; margin-left: auto; flex-wrap: nowrap;">
+                            <input class="form-control nav-search-bar" type="text"  placeholder="Search" v-model="searchbar" v-on="searchemptycheck" style="margin-right: 10px;">
+                            <select class="custom-select" name="" id="" v-model="searchoption" v-on="searchemptycheck">
+                                <option :value="'Choose...'">Choose...</option>
+                                <option :value="'Name'">Name</option>
+                                <option :value="'Roll no'">Roll no</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <th>id</th>
+                            <th>Name</th>
+                            <th>Roll no</th>
+                            <th>Class</th>
+                        </thead>
+                        <tbody>
+                            <tr v-for="row in datasheets">
+                                <td v-text="row.id"></td>
+                                <td v-text="row.name"></td>
+                                <td v-text="row.roll_no"></td>
+                                <td v-text="row.class"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div id="app" v-on="loadspreadsheets" style="display: none;" :style="style">
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <!-- Brand/logo -->
             <a class="navbar-brand text-light Logo"  href="#">DD</a>
             <form class="form-inline" style="flex-wrap: nowrap;" action="">
-                <input class="form-control" type="text"  placeholder="Search">
-                <button class="btn btn-danger nav-search-button" :disabled="search_button.disabled" type="button" style="margin-left:10px"><i class="fas fa-search"></i> Search</button>
+                <input class="form-control nav-search-bar" type="text"  placeholder="Search" v-model="searchdbs" v-on="searchemptycheck">
+                <button class="btn btn-danger nav-search-button" :disabled="search_button.disabled" type="button" style="margin-left:10px" @click="searchdatabase"><i class="fas fa-search"></i> Search</button>
             </form>
-            <button class="btn btn-warning create-new-database" :disabled="createdbs_button.disabled" style="margin-left: auto"><i class="fas fa-plus"></i>
-                Create New Database</button>
+            <button class="btn btn-warning create-new-database" :disabled="createdbs_button.disabled" style="margin-left: auto" @click="createdatabasemenuopen"><i class="fas fa-plus"></i>
+                Create New Entry</button>
         </nav>
         <div class="sidenav">
             <p class="text-light">Home</p>
         </div>
         <main class="main">
             <div class="nothingtoshow">
-                <div class="alert alert-info empty-field" role="alert" style="font-size: 16px;">
+                <div v-if="spreadsheets.length<1" class="alert alert-info empty-field" role="alert" style="font-size: 16px;">
                     Nothing to show now...!! please come back later!!
+                </div>
+                <div v-else class="d-flex">
+                    <div class="card" style="max-width: 18rem; border: none; margin: 10px;cursor: pointer;" @click="showspreadsheet">
+                        <img class="card-image-top" src="/images/document.png" width="150px" alt="">
+                        <span style="font-size: 16px;text-align: center;">Document</span>
+                    </div>
                 </div>
             </div>
         </main>
@@ -78,6 +125,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <!-- CDN for rading excel files -->
     <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
+    <!-- CDN for axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/scripts/vue_script.js"></script>
     <script src="/scripts/script.js"></script>
 </body>
