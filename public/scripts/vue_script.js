@@ -52,7 +52,9 @@ const createdbs=new Vue({
                     app.spreadsheets=output.spreadsheets;
                     showit.spreadsheets=output.spreadsheets;
                     self.style.display="none";
-                    self.loading.display="block";
+                    self.loading.display="none";
+                    this.databasename='Choose...';
+                    this.databasefiletype='Choose...';
                 }
             })
         }
@@ -126,17 +128,19 @@ var showit=new Vue({
         searchemptycheck: function(){
             if(this.searchbar.length>0){
                 if(this.searchoption=="Name"){
+                    this.datasheets=[];
                     for(let each in this.spreadsheets){
                         if(this.spreadsheets[each].name==this.searchbar){
-                            this.datasheets=[this.spreadsheets[each]];
+                            this.datasheets.push(this.spreadsheets[each]);
                             console.log(this.datasheets);
                         }
                     }
                 }
                 else if(this.searchoption=="Roll no"){
+                    this.datasheets=[];
                     for(let each in this.spreadsheets){
                         if(this.spreadsheets[each].roll_no==this.searchbar){
-                            this.datasheets=[this.spreadsheets[each]];
+                            this.datasheets.push(this.spreadsheets[each]);
                         }
                     }
                 }
@@ -151,6 +155,23 @@ var showit=new Vue({
     methods:{
         closeit:function(){
             this.style.display="none";
+            this.searchbar='';
+            this.searchoption="Choose...";
+            this.datasheets=this.spreadsheets;
+        },
+        del: function(id){
+            var self=this;
+            axios.post('/delrow', {
+                id: id
+            }).then(function(response){
+                let output=response.data;
+                console.log(output);
+                if(output.status=='success'){
+                    app.spreadsheets=output.spreadsheets;
+                    self.spreadsheets=output.spreadsheets;
+                    // this.datasheets=output.spreadsheets;
+                }
+            })
         }
     }
 })

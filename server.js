@@ -68,6 +68,26 @@ app.post('/savespreadsheet', (req,res)=>{
   });
 });
 
+app.post('/delrow', (req,res)=>{ 
+  let id=req.body.id;
+  client.query(`DELETE FROM students WHERE id=${id}`, (error, result) => {
+    if (error) {
+      throw error
+    }
+    console.log(result);
+    client.query('SELECT * FROM students', (error, results) => {
+      if (error) {
+        throw error
+      }
+      res.status(200).send({
+        status: "success",
+        message: "Successfully deleted data",
+        spreadsheets: results.rows 
+      })
+    });
+  });
+});
+
 app.get('/test', (req,res)=>{
   client.query('INSERT INTO students(name, roll_no, class) VALUES($1, $2, $3)',["Nischay", 17, 7], (error, results) => {
     if (error) {

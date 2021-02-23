@@ -43,7 +43,7 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 2em">
                     <button class="btn btn-outline-danger" @click="createdatabsemenuclose">Cancel</button>
                     <div class="d-flex">
-                        <div class="spinner-border text-warning" style="margin-right: 10px;display: none;" :style="loading" ></div>
+                        <div class="spinner-border text-warning" style="margin-right: 10px;margin-top:5px; display: none;" :style="loading" ></div>
                         <button type="button" class="btn btn-warning" style="padding: 7px 1em" :disabled="create_button.disabled" @click="createspreadsheet"><i class="fas fa-file-excel"></i> Create</button>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
     <!-- popup for displaying data -->
     <div class="popup-background" id="view" style="display: none;" :style="style">
         <div class="inner-popup-background">
-            <div class="card" id="popup" style="max-width: 60rem; width: 60rem; min-width: 340px; padding: 0 10px; overflow: ;">
+            <div class="card" id="popup" style="max-width: 60rem; width: 60rem; min-width: 340px; padding: 0 10px; max-height: 480px;">
                 <div class="card-header">
                     <div class="d-flex align-items-center" style="margin: 10px 0;">
                         <button class="btn btn-danger" @click="closeit" style="padding:5px 10px; margin-right: 10px">Close</button>
@@ -66,22 +66,24 @@
                             </select>
                         </div>
                     </div>
-                    <table class="table" style="overflow: auto;">
-                        <thead>
-                            <th>id</th>
-                            <th>Name</th>
-                            <th>Roll no</th>
-                            <th>Class</th>
-                        </thead>
-                        <tbody>
-                            <tr v-for="row in datasheets">
-                                <td v-text="row.id"></td>
-                                <td v-text="row.name"></td>
-                                <td v-text="row.roll_no"></td>
-                                <td v-text="row.class"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div style="max-height: 360px; overflow: auto;">
+                        <table class="table">
+                            <thead>
+                                <th>Name</th>
+                                <th>Roll no</th>
+                                <th>Class</th>
+                                <th>Del</th>
+                            </thead>
+                            <tbody>
+                                    <tr v-for="row in datasheets">
+                                        <td v-text="row.name"></td>
+                                        <td v-text="row.roll_no"></td>
+                                        <td v-text="row.class"></td>
+                                        <td><button class="btn btn-warning" @click="del(row.id)"><i class="fas fa-trash"></i></button></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 
             </div>
